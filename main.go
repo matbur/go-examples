@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/matbur95/ucisw/structures"
+	"github.com/matbur95/sdizo/structures"
 	"fmt"
 )
 
@@ -41,4 +41,27 @@ func main() {
 	fmt.Println(ll.Index(3))
 	fmt.Println(ll.Index(4))
 	fmt.Println(ll.Index(5))
+
+	ll.Print()
+	fmt.Println(ll.Remove(1))
+	ll.Print()
+	fmt.Println(ll.Remove(2))
+	ll.Print()
+	fmt.Println(ll.Remove(1))
+	ll.Print()
+	fmt.Println(ll.Remove(2))
+	ll.Print()
+	fmt.Println(ll.Remove(1))
+	ll.Print()
+
+	fmt.Println()
+	ll = structures.NewLinkedList()
+	ll.Insert(1, 0)
+	ll.Append(1)
+	ll.Append(2)
+	ll.Append(3)
+	ll.Print()
+	fmt.Println(ll.Pop(1))
+	ll.Print()
+
 }

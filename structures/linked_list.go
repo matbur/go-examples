@@ -90,3 +90,69 @@ func (ll *LinkedList) Index(value int) int {
 	}
 	return notFoundIndex
 }
+
+func (ll *LinkedList) Remove(value int) int {
+	const notFoundIndex = -1
+
+	if ll.head == nil {
+		return notFoundIndex
+	}
+
+	node := ll.head
+
+	if node.value == value {
+		ll.head = node.next
+		ll.length--
+		return 0
+	}
+
+	if node.next.value == value {
+		node.next = node.next.next
+		ll.length--
+		return 1
+	}
+
+	for i := 1; node.next.next != nil; i++ {
+		if node.next.value == value {
+			node.next = node.next.next
+			ll.length--
+			return i
+		}
+		node = node.next
+	}
+
+	if node.next.value == value {
+		node.next = nil
+		ll.length--
+		return ll.length
+	}
+
+	return notFoundIndex
+}
+
+func (ll *LinkedList) Pop(index int) int {
+	node := ll.head
+
+	if ll.head == nil {
+		panic("pop from empty list")
+	}
+
+	if index >= ll.length {
+		panic("pop index out of range")
+	}
+
+	if index == 0 {
+		ll.head = node.next
+		ll.length--
+		return node.value
+	}
+
+	for i := 1; i < index; i++ {
+		node = node.next
+	}
+
+	node.next = node.next.next
+	ll.length--
+
+	return node.value
+}
