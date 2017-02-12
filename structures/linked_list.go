@@ -19,7 +19,7 @@ type LinkedList struct {
 }
 
 func NewLinkedList() *LinkedList {
-	return &LinkedList{}
+	return &LinkedList{nil, 0}
 }
 
 func (ll *LinkedList) Print() {
