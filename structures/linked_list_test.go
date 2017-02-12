@@ -27,3 +27,39 @@ func TestNewLinkedList(t *testing.T) {
 		t.Errorf("NewLinkedList() == %q, want %q", got, want)
 	}
 }
+
+func TestLinkedList_String(t *testing.T) {
+	errorMessage := "NewLinkedList().String() == %q, want %q"
+
+	ll := NewLinkedList()
+	want := " 0: {}"
+	got := ll.String()
+	if got != want {
+		t.Errorf(errorMessage, got, want)
+	}
+
+	ll.Append(3)
+	want = " 1: {3}"
+	got = ll.String()
+	if got != want {
+		t.Errorf(errorMessage, got, want)
+	}
+}
+
+func TestLinkedList_Index(t *testing.T) {
+	ll := NewLinkedList().Append(0).Append(1).Append(-1)
+	cases := []struct {
+		in, want int
+	}{
+		{0, 0},
+		{-1, 2},
+		{1, 1},
+		{2, -1},
+	}
+	for _, c := range cases {
+		got := ll.Index(c.in)
+		if got != c.want {
+			t.Errorf("ll.Index(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}

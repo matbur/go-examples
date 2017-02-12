@@ -22,7 +22,28 @@ func NewLinkedList() *LinkedList {
 	return &LinkedList{nil, 0}
 }
 
+func (ll *LinkedList) String() string {
+	s := fmt.Sprintf("%2d: {", ll.length)
+
+	if ll.head == nil {
+		return s + "}"
+	}
+
+	node := ll.head
+	s += fmt.Sprint(node.value)
+
+	for node.next != nil {
+		node = node.next
+		s += fmt.Sprintf(", %d", node.value)
+	}
+	return s + "}"
+}
+
 func (ll *LinkedList) Print() {
+	fmt.Println(ll.String())
+}
+
+func (ll *LinkedList) PrintOld() {
 	fmt.Printf("%2d: {", ll.length)
 	defer fmt.Println("}")
 
@@ -39,13 +60,13 @@ func (ll *LinkedList) Print() {
 	}
 }
 
-func (ll *LinkedList) Append(value int) {
+func (ll *LinkedList) Append(value int) *LinkedList{
 	new_node := NewNode(value)
 	ll.length++
 
 	if ll.head == nil {
 		ll.head = new_node
-		return
+		return ll
 	}
 
 	node := ll.head
@@ -53,9 +74,10 @@ func (ll *LinkedList) Append(value int) {
 		node = node.next
 	}
 	node.next = new_node
+	return ll
 }
 
-func (ll *LinkedList) Insert(index, value int) {
+func (ll *LinkedList) Insert(index, value int) *LinkedList{
 	new_node := NewNode(value)
 	ll.length++
 
@@ -64,7 +86,7 @@ func (ll *LinkedList) Insert(index, value int) {
 	if ll.head == nil || index == 0 {
 		ll.head = new_node
 		new_node.next = node
-		return
+		return ll
 	}
 
 	for i := 1; i < index && node.next != nil; i++ {
@@ -72,6 +94,7 @@ func (ll *LinkedList) Insert(index, value int) {
 	}
 	new_node.next = node.next
 	node.next = new_node
+	return ll
 }
 
 func (ll *LinkedList) Index(value int) int {
@@ -82,11 +105,16 @@ func (ll *LinkedList) Index(value int) int {
 	}
 
 	node := ll.head
-	for i := 0; node.next != nil; i++ {
+
+	if node.value == value {
+		return 0
+	}
+
+	for i := 1; node.next != nil; i++ {
+		node = node.next
 		if node.value == value {
 			return i
 		}
-		node = node.next
 	}
 	return notFoundIndex
 }
