@@ -23,10 +23,10 @@ func NewLinkedList() *LinkedList {
 }
 
 func (ll *LinkedList) String() string {
-	s := fmt.Sprintf("%2d: {", ll.length)
+	s := fmt.Sprintf("%2d: [", ll.length)
 
 	if ll.head == nil {
-		return s + "}"
+		return s + "]"
 	}
 
 	node := ll.head
@@ -36,7 +36,7 @@ func (ll *LinkedList) String() string {
 		node = node.next
 		s += fmt.Sprintf(", %d", node.value)
 	}
-	return s + "}"
+	return s + "]"
 }
 
 func (ll *LinkedList) Print() {
@@ -60,24 +60,15 @@ func (ll *LinkedList) PrintOld() {
 	}
 }
 
-func (ll *LinkedList) Append(value int) *LinkedList{
-	new_node := NewNode(value)
-	ll.length++
-
-	if ll.head == nil {
-		ll.head = new_node
-		return ll
+func (ll *LinkedList) Insert(index, value int) *LinkedList {
+	if index == -1 {
+		index = ll.length
+	} else if index <= -ll.length {
+		index = 0
+	} else if index < 0 {
+		index = ll.length - index - 1
 	}
 
-	node := ll.head
-	for node.next != nil {
-		node = node.next
-	}
-	node.next = new_node
-	return ll
-}
-
-func (ll *LinkedList) Insert(index, value int) *LinkedList{
 	new_node := NewNode(value)
 	ll.length++
 
@@ -93,6 +84,27 @@ func (ll *LinkedList) Insert(index, value int) *LinkedList{
 		node = node.next
 	}
 	new_node.next = node.next
+	node.next = new_node
+	return ll
+}
+
+func (ll*LinkedList) Append(value int) *LinkedList {
+	return ll.Insert(-1, value)
+}
+
+func (ll *LinkedList) AppendOld(value int) *LinkedList {
+	new_node := NewNode(value)
+	ll.length++
+
+	if ll.head == nil {
+		ll.head = new_node
+		return ll
+	}
+
+	node := ll.head
+	for node.next != nil {
+		node = node.next
+	}
 	node.next = new_node
 	return ll
 }
