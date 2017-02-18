@@ -1,21 +1,21 @@
-package structures
+package linked_list
 
 import "testing"
 
 func TestNewNode(t *testing.T) {
 	cases := []struct {
 		in   int
-		want *Node
+		want *node
 	}{
-		{0, &Node{0, nil}},
-		{1, &Node{1, nil}},
-		{2, &Node{2, nil}},
-		{-1, &Node{-1, nil}},
+		{0, &node{0, nil}},
+		{1, &node{1, nil}},
+		{2, &node{2, nil}},
+		{-1, &node{-1, nil}},
 	}
 
 	for _, c := range cases {
-		if got := NewNode(c.in); *got != *c.want {
-			t.Errorf("NewNode(%q) == %q, want %q", c.in, got, c.want)
+		if got := newNode(c.in); *got != *c.want {
+			t.Errorf("newNode(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }

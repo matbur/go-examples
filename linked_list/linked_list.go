@@ -1,20 +1,18 @@
-package structures
+package linked_list
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type Node struct {
+type node struct {
 	value int
-	next  *Node
+	next  *node
 }
 
-func NewNode(value int) *Node {
-	return &Node{value, nil}
+func newNode(value int) *node {
+	return &node{value, nil}
 }
 
 type LinkedList struct {
-	head   *Node
+	head   *node
 	length int
 }
 
@@ -43,23 +41,6 @@ func (ll *LinkedList) Print() {
 	fmt.Println(ll.String())
 }
 
-func (ll *LinkedList) PrintOld() {
-	fmt.Printf("%2d: {", ll.length)
-	defer fmt.Println("}")
-
-	if ll.head == nil {
-		return
-	}
-
-	node := ll.head
-	fmt.Print(node.value)
-
-	for node.next != nil {
-		node = node.next
-		fmt.Printf(", %d", node.value)
-	}
-}
-
 func (ll *LinkedList) Insert(index, value int) *LinkedList {
 	if index == -1 {
 		index = ll.length
@@ -69,7 +50,7 @@ func (ll *LinkedList) Insert(index, value int) *LinkedList {
 		index = ll.length - index - 1
 	}
 
-	new_node := NewNode(value)
+	new_node := newNode(value)
 	ll.length++
 
 	node := ll.head
@@ -90,23 +71,6 @@ func (ll *LinkedList) Insert(index, value int) *LinkedList {
 
 func (ll*LinkedList) Append(value int) *LinkedList {
 	return ll.Insert(-1, value)
-}
-
-func (ll *LinkedList) AppendOld(value int) *LinkedList {
-	new_node := NewNode(value)
-	ll.length++
-
-	if ll.head == nil {
-		ll.head = new_node
-		return ll
-	}
-
-	node := ll.head
-	for node.next != nil {
-		node = node.next
-	}
-	node.next = new_node
-	return ll
 }
 
 func (ll *LinkedList) Index(value int) int {
